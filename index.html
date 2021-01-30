@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Mega City Bus</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book.</p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Explore By Bus</h3>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">From</label>
+                        <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                </div>
+                <div class="input-group">
+                    <label" for="">From</label>
+                        <input class="inp-style" type="text" name="" placeholder="Chittagone">
+                </div>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                        <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="inputs">
+                <div class="input-group f-class">
+                    <div>
+                        <label for="" id="firstclass-total">First Class ($220)</label>
+                        <input id="firstclass-count" class="inp-style inp-width" type="number" value="0">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <!-- <button onclick="handleProductChange(true)"  class="btn btn-default"><i class="fas fa-plus">++</i></button>
+                        <button onclick="handleProductChange(false)" class="btn btn-default"><i class="fas fa-minus">---</i></button> -->
+                        <button id="button-plus" onclick="ticketAmount('firstclass' , true)" class="btn btn-default"><i
+                                class="fas fa-plus">+</i></button>
+                        <button id="button-minus" onclick="ticketAmount('firstclass' , false)"
+                            class="btn btn-default"><i class="fas fa-minus">-</i></button>
+                    </div>
+
+
+                </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">Economy ($100)</label>
+                        <input id="economy-count" class="inp-style inp-width" type="number" name="" value="0">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <!-- <button onclick=" handlEconomyChange(true)"  class="btn btn-default"><i class="fas fa-plus">++</i></button>
+                        <button onclick="handlEconomyChange(false)" class="btn btn-default"><i class="fas fa-minus">---</i></button>  -->
+                        <button id="button-plus" onclick=" ticketAmount('economy' , true)"
+                            class=" button btn btn-default"><i class="fas fa-plus">+</i></button>
+                        <button id="button-minus" onclick="ticketAmount('economy' , false)"
+                            class=" button btn btn-default"><i class="fas fa-minus">-</i></button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="subTotal">$0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="totalVat">$0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="totalAmount">$0</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-style">Book Now</button>
+        </div>
+
+    </main>
+
+
+
+
+    <script>
+        function ticketAmount(ticket, isIncreaser) {
+            const firstclassInput = document.getElementById(ticket + '-count');
+            let firstclassCount = parseInt(firstclassInput.value);
+            let firstclassNewCount = firstclassCount;
+            if (isIncreaser == true) {
+                firstclassNewCount = firstclassCount + 1;
+            }
+            if (isIncreaser == false && firstclassCount > 0) {
+                firstclassNewCount = firstclassCount - 1;
+            }
+            firstclassInput.value = firstclassNewCount;
+            let subTotall = 0;
+            if (ticket == "firstclass") {
+                subTotall = firstclassNewCount * 220;
+            }
+            if (ticket == "economy") {
+                subTotall = firstclassNewCount * 100;
+            }
+
+            document.getElementById('subTotal').innerText = subTotall;
+
+            totalCost();
+        }
+
+
+        function totalCost() {
+            const firstclassInput = dynamicInput('firstclass');
+            const economyInput = dynamicInput('economy');
+
+            let subTotal = firstclassInput * 220 + economyInput * 100;
+            document.getElementById("subTotal").innerText = "$" + subTotal;
+
+            let totalVat = Math.round(subTotal * 0.1);
+            document.getElementById('totalVat').innerText = "$" + totalVat;
+
+            let totalAmount = subTotal + totalVat;
+            document.getElementById('totalAmount').innerText = "$" + totalAmount;
+
+        }
+
+        function dynamicInput(input) {
+            const firstclassInput = document.getElementById(input + '-count');
+            const firstclassCount = parseInt(firstclassInput.value);
+            return firstclassCount;
+        }
+
+    </script>
+</body>
+
+</html>
